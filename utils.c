@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atoi.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:27:53 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/02 16:30:37 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:26:22 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long int	atoi(const char *string)
+long long int	ft_atoi(const char *string)
 {
 	int					i;
 	int					sign;

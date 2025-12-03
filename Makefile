@@ -6,14 +6,14 @@
 #    By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 16:34:11 by bedantas          #+#    #+#              #
-#    Updated: 2025/12/02 14:54:10 by bedantas         ###   ########.fr        #
+#    Updated: 2025/12/03 11:12:07 by bedantas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo
 
 CC			= cc
-CFLAGS		= -g -Wall -Wextra -Werror
+CFLAGS		= -pthread -Wall -Wextra -Werror
 
 SRCS		= $(wildcard *.c)
 OBJS		= $(SRCS:.c=.o)
