@@ -6,11 +6,35 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:27:53 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/03 14:04:02 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:55:16 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	valid_input(char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (argv[i][0] == '0' && !(argv[i][j] >= '0' && argv[i][j] <= '9'))
+				return (0);
+			if (argv[i][0] == '+')
+				j++;
+			if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
 
 long	ft_atoi(const char *string)
 {
@@ -39,3 +63,10 @@ long	ft_atoi(const char *string)
 	}
 	return (sign * nb);
 }
+
+void	printf_exit(char *str)
+{
+	printf("%s\n", str);
+	exit(EXIT_FAILURE);
+}
+
