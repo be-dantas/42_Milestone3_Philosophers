@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 16:30:59 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/04 10:16:10 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:24:45 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <limits.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+typedef struct s_data	t_data;
 
 typedef struct s_input
 {
@@ -47,7 +49,6 @@ typedef struct s_data
 
 //input.c
 void	valid_input(int argc, char **argv);
-long	ft_atoi(const char *string);
 void	init_input(char **argv, t_data *data);
 
 //main.c
