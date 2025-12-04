@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:27:53 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/03 19:42:14 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:15:58 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,7 @@ void	valid_input(int argc, char **argv)
 	}
 }
 
-void	printf_exit(char *str)
-{
-	printf("%s\n", str);
-	exit(EXIT_FAILURE);
-}
-
-
-long	ft_atoi(const char *string)
+static long	ft_atoi(const char *string)
 {
 	int		i;
 	int		sign;
@@ -70,4 +63,15 @@ long	ft_atoi(const char *string)
 		i++;
 	}
 	return (sign * nb);
+}
+
+void	init_input(char **argv, t_data *data)
+{
+	data->inp.n_philo = ft_atoi(argv[1]);
+	data->inp.time_to_die = ft_atoi(argv[2]);
+	data->inp.time_to_eat = ft_atoi(argv[3]);
+	data->inp.time_to_sleep = ft_atoi(argv[4]);
+	if (data->inp.n_philo > INT_MAX || data->inp.time_to_die > INT_MAX
+		|| data->inp.time_to_eat > INT_MAX || data->inp.time_to_sleep > INT_MAX)
+		printf_exit("Error");
 }

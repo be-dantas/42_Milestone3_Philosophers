@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 16:30:59 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/03 20:00:51 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:16:10 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ typedef struct s_data
 	pthread_mutex_t	print_mutex;	//para nao sobrepor prints
 }	t_data;
 
+//input.c
+void	valid_input(int argc, char **argv);
+long	ft_atoi(const char *string);
+void	init_input(char **argv, t_data *data);
+
+//main.c
+void	printf_exit(char *str);
+
 //mutex.c
 void	init_mutex(t_data *data);
 void	destroy_mutex(t_data *data);
@@ -52,10 +60,5 @@ void	destroy_mutex(t_data *data);
 //threads.c
 void	create_threads(t_data *data);
 void	join_threads(t_data *data);
-
-//utils.c
-void	valid_input(int argc, char **argv);
-void	printf_exit(char *str);
-long	ft_atoi(const char *string);
 
 #endif
