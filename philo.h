@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 16:30:59 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/04 13:59:11 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 16:22:47 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	long			last_meal_time;
+	long			last_meal_time; /////// tirar?
 	t_data			*data;
 }	t_philo;
 
@@ -45,9 +45,9 @@ typedef struct s_data
 	t_input			inp;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	print_lock;
 	long			start_time;
-	int				dead_flag;
+	int				flag_died;
 }	t_data;
 
 //input.c
@@ -56,16 +56,18 @@ void	init_input(char **argv, t_data *data);
 
 //main.c
 void	printf_exit(char *str);
+long	time_now(t_data *data);
 
 //mutex.c
 void	init_mutex(t_data *data);
 void	destroy_mutex(t_data *data);
 
 //routine.c
+void	*philo_routine(void *arg);
 
 //threads.c
-void	create_threads(t_data *data);
 void	init_philo(t_data *data);
+void	create_threads(t_data *data);
 void	join_threads(t_data *data);
 
 #endif

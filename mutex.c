@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 14:58:43 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/04 10:31:27 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 16:20:25 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_mutex(t_data *data)
 			printf_exit("Error init mutex");
 		i++;
 	}
-	if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
+	if (pthread_mutex_init(&data->print_lock, NULL) != 0)
 		printf_exit("Error init print_mutex");
 }
 
@@ -40,5 +40,5 @@ void	destroy_mutex(t_data *data)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->print_lock);
 }
