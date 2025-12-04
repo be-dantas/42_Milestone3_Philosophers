@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 14:58:43 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/04 16:22:56 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:11:39 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	init_philo(t_data *data)
 		data->philos[i].id = i + 1;
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].right_fork = &data->forks[(i + 1) % data->inp.n_philo];
-		data->philos[i].last_meal_time = data->start_time; /////// tirar?
 		data->philos[i].data = data;
 		i++;
 	}

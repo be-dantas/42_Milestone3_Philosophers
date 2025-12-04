@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 14:58:24 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/04 16:22:38 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:10:38 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ long	time_now(t_data *data)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	data->start_time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
 int	main(int argc, char **argv)
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 	init_mutex(&d);
 	init_philo(&d);
 	create_threads(&d);
-	//func para monitorar threads (faz uma nova thread nela?)
+	monitor(&d);
 	join_threads(&d);
 	destroy_mutex(&d);
 }

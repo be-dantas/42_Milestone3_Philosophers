@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 16:30:59 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/04 16:22:47 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:11:06 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	long			last_meal_time; /////// tirar?
+	long			time_finish; /////// tirar?
 	t_data			*data;
 }	t_philo;
 
@@ -64,6 +64,7 @@ void	destroy_mutex(t_data *data);
 
 //routine.c
 void	*philo_routine(void *arg);
+void	monitor(t_data *data);
 
 //threads.c
 void	init_philo(t_data *data);
