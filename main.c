@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 14:58:24 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/04 10:46:12 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:59:30 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	main(int argc, char **argv)
 
 	valid_input(argc, argv);
 	init_input(argv, &d);
-	init_mutex(&d); //func mutex
+	init_mutex(&d);
 	init_philo(&d);
-	create_threads(&d); //func while threads
-	join_threads(&d); //func pthread_join ("waitpid")
-	destroy_mutex(&d); //func destruir mutex
+	create_threads(&d);
+	join_threads(&d);
+	destroy_mutex(&d);
 }
