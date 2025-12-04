@@ -6,7 +6,7 @@
 /*   By: bedantas <bedantas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:27:53 by bedantas          #+#    #+#             */
-/*   Updated: 2025/12/04 10:18:41 by bedantas         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:30:45 by bedantas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	init_input(char **argv, t_data *data)
 	data->inp.time_to_sleep = ft_atoi(argv[4]);
 	if (data->inp.n_philo > INT_MAX || data->inp.time_to_die > INT_MAX
 		|| data->inp.time_to_eat > INT_MAX || data->inp.time_to_sleep > INT_MAX)
-		printf_exit("Error");
+		printf_exit("Error INT_MAX");
 }
