@@ -23,19 +23,20 @@ static void	join_threads(t_data *data)
 		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
-	free(data->m);
-	free(data->philos);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	d;
 
-	d.start_time = time_now(&d);
+	d.start_time = time_now();
 	valid_init_input(argc, argv, &d);
 	init_mutex(&d);
 	init_create_philo(&d);
 	init_create_monitor(&d);
 	join_threads(&d);
 	destroy_mutex(&d);
+	free(d.philos);
+	free(d.forks);
+	free(d.m);
 }

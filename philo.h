@@ -61,7 +61,7 @@ typedef struct s_data
 void	valid_init_input(int argc, char **argv, t_data *data);
 
 //monitor.c
-void	init_monitor(t_data *data);
+void	init_create_monitor(t_data *data);
 
 //mutex.c
 void	init_mutex(t_data *data);
@@ -72,7 +72,7 @@ void	init_create_philo(t_data *data);
 
 //utils.c
 void	print_action(t_philo *p, char *str);
-void	printf_exit(char *str);
-long	time_now(t_data *data);
+void	printf_exit(t_data *data, char *str);
+long	time_now(void);
 
 #endif

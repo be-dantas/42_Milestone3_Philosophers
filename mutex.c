@@ -19,15 +19,15 @@ void	init_mutex(t_data *data)
 	i = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->inp.n_philo);
 	if (!data->forks)
-		printf_exit("Error malloc forks");
+		printf_exit(data, "Error malloc forks");
 	while (i < data->inp.n_philo)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-			printf_exit("Error init mutex");
+			printf_exit(data, "Error init mutex");
 		i++;
 	}
 	if (pthread_mutex_init(&data->print_lock, NULL) != 0)
-		printf_exit("Error init print_mutex");
+		printf_exit(data, "Error init print_mutex");
 }
 
 void	destroy_mutex(t_data *data)

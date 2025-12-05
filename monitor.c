@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static void	monitor(void *arg)
+static void	*monitor(void *arg)
 {
 	int			i;
 	long		t_now;
@@ -25,7 +25,7 @@ static void	monitor(void *arg)
 		i = 0;
 		while (i < m->data->inp.n_philo)
 		{
-			t_now = time_now(&m->data);
+			t_now = time_now();
 			t_die = t_now - m->data->philos[i].time_finish_eat;
 			if (t_die > m->data->inp.time_to_die)
 			{
@@ -33,20 +33,21 @@ static void	monitor(void *arg)
 				printf("%ld %d died\n", t_now - m->data->start_time, m->data->philos[i].id);
 				m->data->flag_died = 1;
 				pthread_mutex_unlock(&m->data->print_lock);
-				return ;
+				return (NULL);
 			}
 			i++;
 		}
 		usleep(1000);
 	}
+	return (NULL);
 }
 
 void	init_create_monitor(t_data *data)
 {
 	data->m = malloc(sizeof(t_monitor));
 	if (!data->m)
-		printf_exit("Error malloc monitor");
+		printf_exit(data, "Error malloc monitor");
 	data->m->data = data;
 	if (pthread_create(&data->m->thread, NULL, monitor, data->m) != 0)
-		printf_exit("Error create monitor");
+		printf_exit(data, "Error create monitor");
 }

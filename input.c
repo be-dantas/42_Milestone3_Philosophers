@@ -40,25 +40,25 @@ static long	ft_atoi(const char *string)
 	return (sign * nb);
 }
 
-static void	valid_input(int argc, char **argv)
+static void	valid_input(int argc, char **argv, t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 1;
 	if (argc != 5)
-		printf_exit("Error input");
+		printf_exit(data, "Error input");
 	while (argv[i])
 	{
 		j = 0;
 		while (argv[i][j])
 		{
 			if (argv[i][0] == '0' && !(argv[i][j] >= '0' && argv[i][j] <= '9'))
-				printf_exit("Error input");
+				printf_exit(data, "Error input");
 			if (argv[i][0] == '+')
 				j++;
 			if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
-				printf_exit("Error input");
+				printf_exit(data, "Error input");
 			j++;
 		}
 		i++;
@@ -67,12 +67,12 @@ static void	valid_input(int argc, char **argv)
 
 void	valid_init_input(int argc, char **argv, t_data *data)
 {
-	valid_input(argc, argv);
+	valid_input(argc, argv, data);
 	data->inp.n_philo = ft_atoi(argv[1]);
 	data->inp.time_to_die = ft_atoi(argv[2]);
 	data->inp.time_to_eat = ft_atoi(argv[3]);
 	data->inp.time_to_sleep = ft_atoi(argv[4]);
 	if (data->inp.n_philo > INT_MAX || data->inp.time_to_die > INT_MAX
 		|| data->inp.time_to_eat > INT_MAX || data->inp.time_to_sleep > INT_MAX)
-		printf_exit("Error INT_MAX");
+		printf_exit(data, "Error INT_MAX");
 }

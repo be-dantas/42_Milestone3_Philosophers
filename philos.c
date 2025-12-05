@@ -26,19 +26,20 @@ static void	*philo_routine(void *arg)
 		if (p->data->inp.n_philo == 1)
 		{
 			usleep(p->data->inp.time_to_die * 1000);
-			return ;
+			return (NULL);
 		}
 		pthread_mutex_lock(p->right_fork);
 		print_action(p, "has taken a fork");
 		print_action(p, "is eating");
 		usleep(p->data->inp.time_to_eat * 1000);
-		p->time_finish_eat = time_now(&p->data);
+		p->time_finish_eat = time_now();
 		pthread_mutex_unlock(p->left_fork);
 		pthread_mutex_unlock(p->right_fork);
 		print_action(p, "is sleeping");
 		usleep(p->data->inp.time_to_sleep * 1000);
 		print_action(p, "is thinking");
 	}
+	return (NULL);
 }
 
 void	init_create_philo(t_data *data)
@@ -48,7 +49,7 @@ void	init_create_philo(t_data *data)
 	i = 0;
 	data->philos = malloc(sizeof(t_philo) * data->inp.n_philo);
 	if (!data->philos)
-		printf_exit("Error malloc philos");
+		printf_exit(data, "Error malloc philos");
 	while (i < data->inp.n_philo)
 	{
 		data->philos[i].id = i + 1;
@@ -62,7 +63,7 @@ void	init_create_philo(t_data *data)
 	{
 		if (pthread_create(&data->philos[i].thread,
 				NULL, philo_routine, &data->philos[i]) != 0)
-			printf_exit("Error create philos");
+			printf_exit(data, "Error create philos");
 		i++;
 	}
 }
