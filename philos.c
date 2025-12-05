@@ -88,5 +88,4 @@ void	init_create_philo(t_data *data)
 			printf_exit(data, "Error create philos");
 		i++;
 	}
-	return (NULL);
 }
