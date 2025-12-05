@@ -36,9 +36,15 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	long			time_finish_eat; /////// tirar?
+	long			time_finish_eat;
 	t_data			*data;
 }	t_philo;
+
+typedef struct s_monitor
+{
+	pthread_t		thread;
+	t_data			*data;
+}	t_monitor;
 
 typedef struct s_data
 {
@@ -48,27 +54,25 @@ typedef struct s_data
 	pthread_mutex_t	print_lock;
 	long			start_time;
 	int				flag_died;
+	t_monitor		*m;
 }	t_data;
 
 //input.c
-void	valid_input(int argc, char **argv);
-void	init_input(char **argv, t_data *data);
+void	valid_init_input(int argc, char **argv, t_data *data);
 
-//main.c
-void	printf_exit(char *str);
-long	time_now(t_data *data);
+//monitor.c
+void	init_monitor(t_data *data);
 
 //mutex.c
 void	init_mutex(t_data *data);
 void	destroy_mutex(t_data *data);
 
-//routine.c
-void	*philo_routine(void *arg);
-void	monitor(t_data *data);
+//philos.c
+void	init_create_philo(t_data *data);
 
-//threads.c
-void	init_philo(t_data *data);
-void	create_threads(t_data *data);
-void	join_threads(t_data *data);
+//utils.c
+void	print_action(t_philo *p, char *str);
+void	printf_exit(char *str);
+long	time_now(t_data *data);
 
 #endif

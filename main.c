@@ -12,18 +12,19 @@
 
 #include "philo.h"
 
-void	printf_exit(char *str)
+static void	join_threads(t_data *data)
 {
-	printf("%s\n", str);
-	exit(EXIT_FAILURE);
-}
+	int	i;
 
-long	time_now(t_data *data)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	i = 0;
+	pthread_join(data->m->thread, NULL);
+	while (i < data->inp.n_philo)
+	{
+		pthread_join(data->philos[i].thread, NULL);
+		i++;
+	}
+	free(data->m);
+	free(data->philos);
 }
 
 int	main(int argc, char **argv)
@@ -31,12 +32,10 @@ int	main(int argc, char **argv)
 	t_data	d;
 
 	d.start_time = time_now(&d);
-	valid_input(argc, argv);
-	init_input(argv, &d);
+	valid_init_input(argc, argv, &d);
 	init_mutex(&d);
-	init_philo(&d);
-	create_threads(&d);
-	monitor(&d);
+	init_create_philo(&d);
+	init_create_monitor(&d);
 	join_threads(&d);
 	destroy_mutex(&d);
 }
