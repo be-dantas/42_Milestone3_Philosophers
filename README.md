@@ -53,8 +53,6 @@ Compilar:
 ```bash
 make
 ```
-
-Executar Mandelbrot:
 ```bash
 ./philo 5 800 200 200
 ```
