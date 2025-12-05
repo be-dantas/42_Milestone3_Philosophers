@@ -37,6 +37,7 @@ void	destroy_mutex(t_data *data)
 	i = 0;
 	while (i < data->inp.n_philo)
 	{
+		pthread_mutex_destroy(&data->philos[i].p_lock);
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}

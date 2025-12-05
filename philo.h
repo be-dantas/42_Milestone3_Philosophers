@@ -36,6 +36,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	p_lock;
 	long			time_finish_eat;
 	t_data			*data;
 }	t_philo;

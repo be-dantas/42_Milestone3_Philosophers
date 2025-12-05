@@ -26,7 +26,9 @@ static void	*monitor(void *arg)
 		while (i < m->data->inp.n_philo)
 		{
 			t_now = time_now();
+			pthread_mutex_lock(&m->data->philos[i].p_lock);
 			t_die = t_now - m->data->philos[i].time_finish_eat;
+			pthread_mutex_unlock(&m->data->philos[i].p_lock);
 			if (t_die > m->data->inp.time_to_die)
 			{
 				pthread_mutex_lock(&m->data->print_lock);
