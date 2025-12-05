@@ -47,10 +47,10 @@ static void	*philo_routine(void *arg)
 	{
 		if (lock_unlock(p) == 0)
 			return (NULL);
-		print_action(p, "is eating");
 		pthread_mutex_lock(&p->p_lock);
 		p->time_finish_eat = time_now();
 		pthread_mutex_unlock(&p->p_lock);
+		print_action(p, "is eating");
 		usleep(p->data->inp.time_to_eat * 1000);
 		pthread_mutex_unlock(p->left_fork);
 		pthread_mutex_unlock(p->right_fork);
@@ -88,4 +88,5 @@ void	init_create_philo(t_data *data)
 			printf_exit(data, "Error create philos");
 		i++;
 	}
+	return (NULL);
 }
