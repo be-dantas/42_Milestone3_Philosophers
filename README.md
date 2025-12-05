@@ -6,7 +6,7 @@ Você precisa programar, em C, filósofos que comem, dormem e pensam, mas que co
 ## 🎯 Proposta do projeto é ensinar a lidar com:
 
 - Threads (ou processos)
-- Mutexes e semáforos no bonus
+- Mutexes e semáforos no bonus 
 - Race conditions
 - Deadlocks e starvation
 
