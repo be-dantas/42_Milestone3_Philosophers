@@ -25,3 +25,36 @@ Você precisa programar, em C, filósofos que comem, dormem e pensam, mas que co
 8. Input esperado (apenas numeros positivos): ./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat (opicional)]
 
 ## 🚀 Minha Solução
+
+1. Structs
+A divisão em quatro structs (input, filósofo, monitor e global) é adequada e ajuda na organização. Só cuide para não criar dependências desnecessárias entre elas.
+
+2. Validação do input
+Verificar letras, números negativos, zeros e quantidade correta de argumentos está correto. Tratar possíveis overflows seria um refinamento opcional.
+
+3. Garfos e mutexes
+Criar um mutex por garfo é o comportamento esperado. A ordem de travar os mutexes é crucial para evitar deadlock.
+
+4. Threads dos filósofos
+Criar uma thread por filósofo e executar o ciclo comer–dormir–pensar é o padrão. O uso de mutex para controlar o print também é necessário.
+
+5. Monitor
+Ter uma thread dedicada ao monitoramento do estado dos filósofos e de uma flag global é a abordagem correta para detectar mortes sem race conditions.
+
+6. pthread_join
+Usar pthread_join para garantir que todas as threads finalizem corretamente é obrigatório e está certo.
+
+7. Destruição de mutexes
+Finalizar todos os mutexes ao encerrar o programa é a prática correta e evita vazamentos.
+
+## 🛠️ Como usar
+
+Compilar:
+```bash
+make
+```
+
+Executar Mandelbrot:
+```bash
+./philo 5 800 200 200
+```
