@@ -12,6 +12,15 @@
 
 #include "philo.h"
 
+static void	print_died(t_monitor *m, int i, long t_now)
+{
+	pthread_mutex_lock(&m->data->print_lock);
+	printf("%ld %d died\n", t_now - m->data->start_time,
+		m->data->philos[i].id);
+	m->data->flag_died = 1;
+	pthread_mutex_unlock(&m->data->print_lock);
+}
+
 static void	*monitor(void *arg)
 {
 	int			i;
@@ -31,10 +40,7 @@ static void	*monitor(void *arg)
 			pthread_mutex_unlock(&m->data->philos[i].p_lock);
 			if (t_die > m->data->inp.time_to_die)
 			{
-				pthread_mutex_lock(&m->data->print_lock);
-				printf("%ld %d died\n", t_now - m->data->start_time, m->data->philos[i].id);
-				m->data->flag_died = 1;
-				pthread_mutex_unlock(&m->data->print_lock);
+				print_died(m, i, t_now);
 				return (NULL);
 			}
 			i++;
