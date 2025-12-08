@@ -21,6 +21,8 @@ static long	ft_atoi(const char *string)
 	i = 0;
 	while ((string[i] >= 9 && string[i] <= 13) || string[i] == 32)
 		i++;
+	if (string[i] == '+')
+		i++;
 	while (string[i] >= '0' && string[i] <= '9')
 	{
 		nb = nb * 10 + (string[i] - 48);
@@ -62,10 +64,10 @@ static void	valid_input(int argc, char **argv)
 		j = 0;
 		if (is_pure_zero(argv[i]))
 			print_error_input();
+		if (argv[i][0] == '+')
+			j++;
 		while (argv[i][j])
 		{
-			if (argv[i][0] == '+')
-				j++;
 			if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
 				print_error_input();
 			j++;
