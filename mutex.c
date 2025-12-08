@@ -12,6 +12,14 @@
 
 #include "philo.h"
 
+static void	print_error_mutex(char *str, t_data *data)
+{
+	if (data->forks)
+		free(data->forks);
+	printf("%s\n", str);
+	exit(EXIT_FAILURE);
+}
+
 void	init_mutex(t_data *data)
 {
 	int	i;
@@ -19,15 +27,15 @@ void	init_mutex(t_data *data)
 	i = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->inp.n_philo);
 	if (!data->forks)
-		printf_exit(data, "Error malloc forks");
+		print_error_mutex("Error malloc forks", data);
 	while (i < data->inp.n_philo)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-			printf_exit(data, "Error init mutex");
+			print_error_mutex("Error init mutex", data);
 		i++;
 	}
 	if (pthread_mutex_init(&data->print_lock, NULL) != 0)
-		printf_exit(data, "Error init print_mutex");
+		print_error_mutex("Error init print_mutex", data);
 }
 
 void	destroy_mutex(t_data *data)

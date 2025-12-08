@@ -50,12 +50,22 @@ static void	*monitor(void *arg)
 	return (NULL);
 }
 
+static void	print_error_monitor(char *str, t_data *data)
+{
+	if (data->m)
+		free(data->m);
+	free(data->philos);
+	free(data->forks);
+	printf("%s\n", str);
+	exit(EXIT_FAILURE);
+}
+
 void	init_create_monitor(t_data *data)
 {
 	data->m = malloc(sizeof(t_monitor));
 	if (!data->m)
-		printf_exit(data, "Error malloc monitor");
+		print_error_monitor("Error malloc monitor", data);
 	data->m->data = data;
 	if (pthread_create(&data->m->thread, NULL, monitor, data->m) != 0)
-		printf_exit(data, "Error create monitor");
+		print_error_monitor("Error create monitor", data);
 }
