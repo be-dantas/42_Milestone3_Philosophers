@@ -23,8 +23,8 @@ static void	print_action(t_philo *p, char *str)
 		pthread_mutex_unlock(&p->data->lock_flag_stop);
 		return ;
 	}
-	pthread_mutex_unlock(&p->data->lock_flag_stop);
 	pthread_mutex_lock(&p->data->lock_print);
+	pthread_mutex_unlock(&p->data->lock_flag_stop);
 	t_now = time_now();
 	time = t_now - p->data->start_time;
 	printf("%ld %d %s\n", time, p->id, str);
