@@ -24,11 +24,11 @@ static void	print_action(t_philo *p, char *str)
 		return ;
 	}
 	pthread_mutex_unlock(&p->data->lock_flag_died);
-	pthread_mutex_lock(&p->data->print_lock);
+	pthread_mutex_lock(&p->data->lock_print);
 	t_now = time_now();
 	time = t_now - p->data->start_time;
 	printf("%ld %d %s\n", time, p->id, str);
-	pthread_mutex_unlock(&p->data->print_lock);
+	pthread_mutex_unlock(&p->data->lock_print);
 }
 
 static int	lock_unlock(t_philo *p)
@@ -77,7 +77,9 @@ static void	*philo_routine(void *arg)
 		pthread_mutex_lock(&p->p_lock);
 		p->time_finish_eat = time_now();
 		pthread_mutex_unlock(&p->p_lock);
+		pthread_mutex_lock(&p->p_lock);
 		p->count_eat++;
+		pthread_mutex_unlock(&p->p_lock);
 		print_action(p, "is eating");
 		usleep(p->data->inp.time_to_eat * 1000);
 		pthread_mutex_unlock(p->left_fork);

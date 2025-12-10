@@ -54,7 +54,7 @@ typedef struct s_data
 	t_input			inp;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	print_lock;
+	pthread_mutex_t	lock_print;
 	long			start_time;
 	int				flag_died;
 	pthread_mutex_t	lock_flag_died;

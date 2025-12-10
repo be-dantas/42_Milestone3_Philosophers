@@ -62,7 +62,7 @@ static void	valid_input(int argc, char **argv)
 	while (argv[i])
 	{
 		j = 0;
-		if (is_pure_zero(argv[1]) || )
+		if (is_pure_zero(argv[i]))
 			print_error_input();
 		if (argv[i][0] == '+')
 			j++;

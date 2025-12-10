@@ -14,13 +14,42 @@
 
 static void	print_died(t_monitor *m, int i, long t_now)
 {
-	pthread_mutex_lock(&m->data->print_lock);
+	pthread_mutex_lock(&m->data->lock_print);
 	printf("%ld %d died\n", t_now - m->data->start_time,
 		m->data->philos[i].id);
-	pthread_mutex_unlock(&m->data->print_lock);
+	pthread_mutex_unlock(&m->data->lock_print);
 	pthread_mutex_lock(&m->data->lock_flag_died);
 	m->data->flag_died = 1;
 	pthread_mutex_unlock(&m->data->lock_flag_died);
+}
+
+static int	check_all_eat(t_monitor *m)
+{
+	t_philo	*p;
+	int		i;
+	int		full;
+
+	i = 0;
+	full = 0;
+	if (m->data->inp.n_eat == -1)
+		return (0);
+	while (i < m->data->inp.n_philo)
+	{
+		p = &m->data->philos[i];
+		pthread_mutex_lock(&p->p_lock);
+		if (p->count_eat >= m->data->inp.n_eat)
+			full++;
+		pthread_mutex_unlock(&p->p_lock);
+		i++;
+	}
+	if (full == m->data->inp.n_philo)
+	{
+		pthread_mutex_lock(&m->data->lock_flag_died);
+		m->data->flag_died = 1;
+		pthread_mutex_unlock(&m->data->lock_flag_died);
+		return (1);
+	}
+	return (0);
 }
 
 static void	*monitor(void *arg)
@@ -54,6 +83,8 @@ static void	*monitor(void *arg)
 			}
 			i++;
 		}
+		if (check_all_eat(m))
+  			return (NULL);
 		usleep(1000);
 	}
 	return (NULL);
