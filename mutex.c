@@ -42,4 +42,5 @@ void	destroy_mutex(t_data *data)
 		i++;
 	}
 	pthread_mutex_destroy(&data->lock_print);
+	pthread_mutex_destroy(&data->lock_flag_died);
 }

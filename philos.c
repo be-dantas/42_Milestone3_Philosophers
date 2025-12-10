@@ -33,13 +33,11 @@ static void	print_action(t_philo *p, char *str)
 
 static void	philo_routine_eat(t_philo *p)
 {
+	print_action(p, "is eating");
 	pthread_mutex_lock(&p->p_lock);
 	p->time_finish_eat = time_now();
-	pthread_mutex_unlock(&p->p_lock);
-	pthread_mutex_lock(&p->p_lock);
 	p->count_eat++;
 	pthread_mutex_unlock(&p->p_lock);
-	print_action(p, "is eating");
 	usleep(p->data->inp.time_to_eat * 1000);
 }
 
