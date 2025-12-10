@@ -54,5 +54,5 @@ Compilar:
 make
 ```
 ```bash
-./philo 5 800 200 200
+./philo 5 410 200 200
 ```
