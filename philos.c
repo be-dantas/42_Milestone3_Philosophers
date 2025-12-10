@@ -41,6 +41,35 @@ static void	philo_routine_eat(t_philo *p)
 	usleep(p->data->inp.time_to_eat * 1000);
 }
 
+/*
+static int	lock_fork(t_philo *p)
+{
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
+
+	if (p->left_fork < p->right_fork)
+	{
+		first_fork = p->left_fork;
+		second_fork = p->right_fork;
+	}
+	else
+	{
+		first_fork = p->right_fork;
+		second_fork = p->left_fork;
+	}
+	pthread_mutex_lock(first_fork);
+	print_action(p, "has taken a fork");
+	if (p->data->inp.n_philo == 1)
+	{
+		usleep(p->data->inp.time_to_die * 1000);
+		pthread_mutex_unlock(first_fork);
+		return (0);
+	}
+	pthread_mutex_lock(second_fork);
+	print_action(p, "has taken a fork");
+	return (1);
+}*/
+
 static int	lock_fork(t_philo *p)
 {
 	if (p->id % 2 == 0)
