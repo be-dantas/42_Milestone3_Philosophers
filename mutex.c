@@ -28,6 +28,8 @@ void	init_mutex(t_data *data)
 	}
 	if (pthread_mutex_init(&data->lock_print, NULL) != 0)
 		print_error_mutex("Error init print_mutex", data);
+	if (pthread_mutex_init(&data->lock_flag_stop, NULL) != 0)
+        print_error_mutex("Error init lock_flag_stop", data);
 }
 
 void	destroy_mutex(t_data *data)
@@ -42,5 +44,5 @@ void	destroy_mutex(t_data *data)
 		i++;
 	}
 	pthread_mutex_destroy(&data->lock_print);
-	pthread_mutex_destroy(&data->lock_flag_died);
+	pthread_mutex_destroy(&data->lock_flag_stop);
 }

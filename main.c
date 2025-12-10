@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	t_data	d;
 
 	d.start_time = time_now();
-	d.flag_died = 0;
+	d.flag_stop = 0;
 	valid_init_input(argc, argv, &d);
 	init_mutex(&d);
 	init_create_philo(&d, 0);

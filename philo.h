@@ -56,8 +56,8 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock_print;
 	long			start_time;
-	int				flag_died;
-	pthread_mutex_t	lock_flag_died;
+	int				flag_stop;
+	pthread_mutex_t	lock_flag_stop;
 	t_monitor		*m;
 }	t_data;
 

@@ -17,13 +17,13 @@ static void	print_action(t_philo *p, char *str)
 	long	t_now;
 	long	time;
 
-	pthread_mutex_lock(&p->data->lock_flag_died);
-	if (p->data->flag_died == 1)
+	pthread_mutex_lock(&p->data->lock_flag_stop);
+	if (p->data->flag_stop == 1)
 	{
-		pthread_mutex_unlock(&p->data->lock_flag_died);
+		pthread_mutex_unlock(&p->data->lock_flag_stop);
 		return ;
 	}
-	pthread_mutex_unlock(&p->data->lock_flag_died);
+	pthread_mutex_unlock(&p->data->lock_flag_stop);
 	pthread_mutex_lock(&p->data->lock_print);
 	t_now = time_now();
 	time = t_now - p->data->start_time;
@@ -75,13 +75,13 @@ static void	*philo_routine(void *arg)
 		usleep(1000);
 	while (1)
 	{
-		pthread_mutex_lock(&p->data->lock_flag_died);
-		if (p->data->flag_died == 1)
+		pthread_mutex_lock(&p->data->lock_flag_stop);
+		if (p->data->flag_stop == 1)
 		{
-			pthread_mutex_unlock(&p->data->lock_flag_died);
+			pthread_mutex_unlock(&p->data->lock_flag_stop);
 			break ;
 		}
-		pthread_mutex_unlock(&p->data->lock_flag_died);
+		pthread_mutex_unlock(&p->data->lock_flag_stop);
 		if (lock_fork(p) == 0)
 			return (NULL);
 		philo_routine_eat(p);

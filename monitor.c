@@ -18,9 +18,9 @@ static void	print_died(t_monitor *m, int i, long t_now)
 	printf("%ld %d died\n", t_now - m->data->start_time,
 		m->data->philos[i].id);
 	pthread_mutex_unlock(&m->data->lock_print);
-	pthread_mutex_lock(&m->data->lock_flag_died);
-	m->data->flag_died = 1;
-	pthread_mutex_unlock(&m->data->lock_flag_died);
+	pthread_mutex_lock(&m->data->lock_flag_stop);
+	m->data->flag_stop = 1;
+	pthread_mutex_unlock(&m->data->lock_flag_stop);
 }
 
 static int	check_all_eat(t_monitor *m, int i, int full)
@@ -40,9 +40,9 @@ static int	check_all_eat(t_monitor *m, int i, int full)
 	}
 	if (full == m->data->inp.n_philo)
 	{
-		pthread_mutex_lock(&m->data->lock_flag_died);
-		m->data->flag_died = 1;
-		pthread_mutex_unlock(&m->data->lock_flag_died);
+		pthread_mutex_lock(&m->data->lock_flag_stop);
+		m->data->flag_stop = 1;
+		pthread_mutex_unlock(&m->data->lock_flag_stop);
 		pthread_mutex_lock(&m->data->lock_print);
 		printf("All philosophers have eaten enough\n");
 		pthread_mutex_unlock(&m->data->lock_print);
@@ -77,13 +77,13 @@ static void	*monitor(void *arg)
 	while (1)
 	{
 		i = 0;
-		pthread_mutex_lock(&m->data->lock_flag_died);
-		if (m->data->flag_died == 1)
+		pthread_mutex_lock(&m->data->lock_flag_stop);
+		if (m->data->flag_stop == 1)
 		{
-			pthread_mutex_unlock(&m->data->lock_flag_died);
+			pthread_mutex_unlock(&m->data->lock_flag_stop);
 			break ;
 		}
-		pthread_mutex_unlock(&m->data->lock_flag_died);
+		pthread_mutex_unlock(&m->data->lock_flag_stop);
 		while (i < m->data->inp.n_philo)
 		{
 			if (check_die(m, i))
