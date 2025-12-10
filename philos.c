@@ -17,13 +17,17 @@ static void	print_action(t_philo *p, char *str)
 	long	t_now;
 	long	time;
 
-	pthread_mutex_lock(&p->data->print_lock);
-	if (p->data->flag_died != 1)
+	pthread_mutex_lock(&p->data->lock_flag_died);
+	if (p->data->flag_died == 1)
 	{
-		t_now = time_now();
-		time = t_now - p->data->start_time;
-		printf("%ld %d %s\n", time, p->id, str);
+		pthread_mutex_unlock(&p->data->lock_flag_died);
+		return ;
 	}
+	pthread_mutex_unlock(&p->data->lock_flag_died);
+	pthread_mutex_lock(&p->data->print_lock);
+	t_now = time_now();
+	time = t_now - p->data->start_time;
+	printf("%ld %d %s\n", time, p->id, str);
 	pthread_mutex_unlock(&p->data->print_lock);
 }
 
@@ -42,6 +46,7 @@ static int	lock_unlock(t_philo *p)
 		print_action(p, "has taken a fork");
 		if (p->data->inp.n_philo == 1)
 		{
+			pthread_mutex_unlock(p->left_fork);
 			usleep(p->data->inp.time_to_die * 1000);
 			return (0);
 		}
@@ -58,13 +63,21 @@ static void	*philo_routine(void *arg)
 	p = arg;
 	if (p->id % 2 != 0)
 		usleep(1000);
-	while (p->data->flag_died != 1)
+	while (1)
 	{
+		pthread_mutex_lock(&p->data->lock_flag_died);
+		if (p->data->flag_died == 1)
+		{
+			pthread_mutex_unlock(&p->data->lock_flag_died);
+			break ;
+		}
+		pthread_mutex_unlock(&p->data->lock_flag_died);
 		if (lock_unlock(p) == 0)
 			return (NULL);
 		pthread_mutex_lock(&p->p_lock);
 		p->time_finish_eat = time_now();
 		pthread_mutex_unlock(&p->p_lock);
+		p->count_eat++;
 		print_action(p, "is eating");
 		usleep(p->data->inp.time_to_eat * 1000);
 		pthread_mutex_unlock(p->left_fork);
@@ -100,6 +113,7 @@ void	init_create_philo(t_data *data)
 		data->philos[i].right_fork = &data->forks[(i + 1) % data->inp.n_philo];
 		if (pthread_mutex_init(&data->philos[i].p_lock, NULL) != 0)
 			print_error_philo("Error p_lock mutex", data);
+		data->philos[i].count_eat = 0;
 		data->philos[i].time_finish_eat = data->start_time;
 		data->philos[i].data = data;
 		i++;

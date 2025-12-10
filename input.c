@@ -57,12 +57,12 @@ static void	valid_input(int argc, char **argv)
 	int	j;
 
 	i = 1;
-	if (argc != 5)
+	if (argc != 5 && argc != 6)
 		print_error_input();
 	while (argv[i])
 	{
 		j = 0;
-		if (is_pure_zero(argv[i]))
+		if (is_pure_zero(argv[1]) || )
 			print_error_input();
 		if (argv[i][0] == '+')
 			j++;
@@ -83,7 +83,12 @@ void	valid_init_input(int argc, char **argv, t_data *data)
 	data->inp.time_to_die = ft_atoi(argv[2]);
 	data->inp.time_to_eat = ft_atoi(argv[3]);
 	data->inp.time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data->inp.n_eat = ft_atoi(argv[5]);
+	else
+		data->inp.n_eat = -1;
 	if (data->inp.n_philo > INT_MAX || data->inp.time_to_die > INT_MAX
-		|| data->inp.time_to_eat > INT_MAX || data->inp.time_to_sleep > INT_MAX)
+		|| data->inp.time_to_eat > INT_MAX || data->inp.time_to_sleep > INT_MAX
+		|| data->inp.n_philo > INT_MAX)
 		print_error_input();
 }

@@ -17,8 +17,10 @@ static void	print_died(t_monitor *m, int i, long t_now)
 	pthread_mutex_lock(&m->data->print_lock);
 	printf("%ld %d died\n", t_now - m->data->start_time,
 		m->data->philos[i].id);
-	m->data->flag_died = 1;
 	pthread_mutex_unlock(&m->data->print_lock);
+	pthread_mutex_lock(&m->data->lock_flag_died);
+	m->data->flag_died = 1;
+	pthread_mutex_unlock(&m->data->lock_flag_died);
 }
 
 static void	*monitor(void *arg)
@@ -29,9 +31,16 @@ static void	*monitor(void *arg)
 	t_monitor	*m;
 
 	m = arg;
-	while (m->data->flag_died != 1)
+	while (1)
 	{
 		i = 0;
+		pthread_mutex_lock(&m->data->lock_flag_died);
+		if (m->data->flag_died == 1)
+		{
+			pthread_mutex_unlock(&m->data->lock_flag_died);
+			break ;
+		}
+		pthread_mutex_unlock(&m->data->lock_flag_died);
 		while (i < m->data->inp.n_philo)
 		{
 			t_now = time_now();
