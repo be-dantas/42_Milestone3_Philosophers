@@ -31,7 +31,19 @@ static void	print_action(t_philo *p, char *str)
 	pthread_mutex_unlock(&p->data->lock_print);
 }
 
-static int	lock_unlock(t_philo *p)
+static void	philo_routine_eat(t_philo *p)
+{
+	pthread_mutex_lock(&p->p_lock);
+	p->time_finish_eat = time_now();
+	pthread_mutex_unlock(&p->p_lock);
+	pthread_mutex_lock(&p->p_lock);
+	p->count_eat++;
+	pthread_mutex_unlock(&p->p_lock);
+	print_action(p, "is eating");
+	usleep(p->data->inp.time_to_eat * 1000);
+}
+
+static int	lock_fork(t_philo *p)
 {
 	if (p->id % 2 == 0)
 	{
@@ -72,16 +84,9 @@ static void	*philo_routine(void *arg)
 			break ;
 		}
 		pthread_mutex_unlock(&p->data->lock_flag_died);
-		if (lock_unlock(p) == 0)
+		if (lock_fork(p) == 0)
 			return (NULL);
-		pthread_mutex_lock(&p->p_lock);
-		p->time_finish_eat = time_now();
-		pthread_mutex_unlock(&p->p_lock);
-		pthread_mutex_lock(&p->p_lock);
-		p->count_eat++;
-		pthread_mutex_unlock(&p->p_lock);
-		print_action(p, "is eating");
-		usleep(p->data->inp.time_to_eat * 1000);
+		philo_routine_eat(p);
 		pthread_mutex_unlock(p->left_fork);
 		pthread_mutex_unlock(p->right_fork);
 		print_action(p, "is sleeping");
@@ -91,20 +96,8 @@ static void	*philo_routine(void *arg)
 	return (NULL);
 }
 
-static void	print_error_philo(char *str, t_data *data)
+void	init_create_philo(t_data *data, int i)
 {
-	if (data->philos)
-		free(data->philos);
-	free(data->forks);
-	printf("%s\n", str);
-	exit(EXIT_FAILURE);
-}
-
-void	init_create_philo(t_data *data)
-{
-	int	i;
-
-	i = 0;
 	data->philos = malloc(sizeof(t_philo) * data->inp.n_philo);
 	if (!data->philos)
 		print_error_philo("Error malloc philos", data);

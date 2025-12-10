@@ -75,6 +75,11 @@ void	init_mutex(t_data *data);
 void	destroy_mutex(t_data *data);
 
 //philos.c
-void	init_create_philo(t_data *data);
+void	init_create_philo(t_data *data, int i);
+
+//print_error.c
+void	print_error_mutex(char *str, t_data *data);
+void	print_error_philo(char *str, t_data *data);
+void	print_error_monitor(char *str, t_data *data);
 
 #endif

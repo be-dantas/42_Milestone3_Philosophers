@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	d.flag_died = 0;
 	valid_init_input(argc, argv, &d);
 	init_mutex(&d);
-	init_create_philo(&d);
+	init_create_philo(&d, 0);
 	init_create_monitor(&d);
 	join_threads(&d);
 	destroy_mutex(&d);

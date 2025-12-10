@@ -52,11 +52,26 @@ static int	check_all_eat(t_monitor *m)
 	return (0);
 }
 
+static int	check_die(t_monitor *m, int i)
+{
+	long	t_now;
+	long	t_die;
+
+	t_now = time_now();
+	pthread_mutex_lock(&m->data->philos[i].p_lock);
+	t_die = t_now - m->data->philos[i].time_finish_eat;
+	pthread_mutex_unlock(&m->data->philos[i].p_lock);
+	if (t_die > m->data->inp.time_to_die)
+	{
+		print_died(m, i, t_now);
+		return (1);
+	}
+	return (0);
+}
+
 static void	*monitor(void *arg)
 {
 	int			i;
-	long		t_now;
-	long		t_die;
 	t_monitor	*m;
 
 	m = arg;
@@ -72,32 +87,15 @@ static void	*monitor(void *arg)
 		pthread_mutex_unlock(&m->data->lock_flag_died);
 		while (i < m->data->inp.n_philo)
 		{
-			t_now = time_now();
-			pthread_mutex_lock(&m->data->philos[i].p_lock);
-			t_die = t_now - m->data->philos[i].time_finish_eat;
-			pthread_mutex_unlock(&m->data->philos[i].p_lock);
-			if (t_die > m->data->inp.time_to_die)
-			{
-				print_died(m, i, t_now);
+			if (check_die(m, i))
 				return (NULL);
-			}
 			i++;
 		}
 		if (check_all_eat(m))
-  			return (NULL);
+			return (NULL);
 		usleep(1000);
 	}
 	return (NULL);
-}
-
-static void	print_error_monitor(char *str, t_data *data)
-{
-	if (data->m)
-		free(data->m);
-	free(data->philos);
-	free(data->forks);
-	printf("%s\n", str);
-	exit(EXIT_FAILURE);
 }
 
 void	init_create_monitor(t_data *data)
