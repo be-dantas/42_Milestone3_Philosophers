@@ -100,6 +100,7 @@ void	init_create_philo(t_data *data, int i)
 	data->philos = malloc(sizeof(t_philo) * data->inp.n_philo);
 	if (!data->philos)
 		print_error_philo("Error malloc philos", data);
+	data->start_time = time_now();
 	while (i < data->inp.n_philo)
 	{
 		data->philos[i].id = i + 1;
