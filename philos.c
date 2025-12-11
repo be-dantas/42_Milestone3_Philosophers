@@ -14,7 +14,6 @@
 
 static void	print_action(t_philo *p, char *str)
 {
-	long	t_now;
 	long	time;
 
 	pthread_mutex_lock(&p->data->lock_flag_stop);
@@ -23,10 +22,9 @@ static void	print_action(t_philo *p, char *str)
 		pthread_mutex_unlock(&p->data->lock_flag_stop);
 		return ;
 	}
-	pthread_mutex_lock(&p->data->lock_print);
 	pthread_mutex_unlock(&p->data->lock_flag_stop);
-	t_now = time_now();
-	time = t_now - p->data->start_time;
+	time = time_now() - p->data->start_time;
+	pthread_mutex_lock(&p->data->lock_print);
 	printf("%ld %d %s\n", time, p->id, str);
 	pthread_mutex_unlock(&p->data->lock_print);
 }
@@ -41,7 +39,6 @@ static void	philo_routine_eat(t_philo *p)
 	usleep(p->data->inp.time_to_eat * 1000);
 }
 
-/*
 static int	lock_fork(t_philo *p)
 {
 	pthread_mutex_t	*first_fork;
@@ -67,31 +64,6 @@ static int	lock_fork(t_philo *p)
 	}
 	pthread_mutex_lock(second_fork);
 	print_action(p, "has taken a fork");
-	return (1);
-}*/
-
-static int	lock_fork(t_philo *p)
-{
-	if (p->id % 2 == 0)
-	{
-		pthread_mutex_lock(p->right_fork);
-		print_action(p, "has taken a fork");
-		pthread_mutex_lock(p->left_fork);
-		print_action(p, "has taken a fork");
-	}
-	else
-	{
-		pthread_mutex_lock(p->left_fork);
-		print_action(p, "has taken a fork");
-		if (p->data->inp.n_philo == 1)
-		{
-			pthread_mutex_unlock(p->left_fork);
-			usleep(p->data->inp.time_to_die * 1000);
-			return (0);
-		}
-		pthread_mutex_lock(p->right_fork);
-		print_action(p, "has taken a fork");
-	}
 	return (1);
 }
 
