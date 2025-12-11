@@ -65,6 +65,7 @@ typedef struct s_data
 void	valid_init_input(int argc, char **argv, t_data *data);
 
 //main.c
+void	func_sleep(long time);
 long	time_now(void);
 
 //monitor.c

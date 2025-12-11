@@ -36,7 +36,7 @@ static void	philo_routine_eat(t_philo *p)
 	p->time_finish_eat = time_now();
 	p->count_eat++;
 	pthread_mutex_unlock(&p->p_lock);
-	usleep(p->data->inp.time_to_eat * 1000);
+	func_sleep(p->data->inp.time_to_eat);
 }
 
 static int	lock_fork(t_philo *p)
@@ -58,7 +58,7 @@ static int	lock_fork(t_philo *p)
 	print_action(p, "has taken a fork");
 	if (p->data->inp.n_philo == 1)
 	{
-		usleep(p->data->inp.time_to_die * 1000);
+		func_sleep(p->data->inp.time_to_die);
 		pthread_mutex_unlock(first_fork);
 		return (0);
 	}
@@ -73,7 +73,7 @@ static void	*philo_routine(void *arg)
 
 	p = arg;
 	if (p->id % 2 != 0)
-		usleep(1000);
+		func_sleep(2);
 	while (1)
 	{
 		pthread_mutex_lock(&p->data->lock_flag_stop);
@@ -89,7 +89,7 @@ static void	*philo_routine(void *arg)
 		pthread_mutex_unlock(p->left_fork);
 		pthread_mutex_unlock(p->right_fork);
 		print_action(p, "is sleeping");
-		usleep(p->data->inp.time_to_sleep * 1000);
+		func_sleep(p->data->inp.time_to_sleep);
 		print_action(p, "is thinking");
 	}
 	return (NULL);

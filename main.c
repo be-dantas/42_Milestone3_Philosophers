@@ -25,6 +25,15 @@ static void	join_threads(t_data *data)
 	}
 }
 
+void	func_sleep(long time)
+{
+	long	start;
+
+	start = time_now();
+	while (time_now() - start < time)
+		usleep(200);
+}
+
 long	time_now(void)
 {
 	struct timeval	tv;

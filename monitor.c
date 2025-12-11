@@ -92,7 +92,7 @@ static void	*monitor(void *arg)
 		}
 		if (check_all_eat(m, 0, 0))
 			return (NULL);
-		usleep(1000);
+		func_sleep(1);
 	}
 	return (NULL);
 }
